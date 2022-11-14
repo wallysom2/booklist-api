@@ -4,10 +4,7 @@ dotenv.config();
 
 const { Pool } = pg;
 const config = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    connectionString: process.env.DATABASE_URL
 }
 
 const db: pg.Pool = new Pool(config);
