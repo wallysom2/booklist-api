@@ -6,7 +6,7 @@ const router: Router = Router();
 router.get('/', bookController.getAllBooks);
 router.get('/:id', bookController.getBookById);
 router.post('/', bookController.insertBook);
-//router.put('/:id', updateBook);
-//router.delete('/:id', deleteBook);
+router.put('/:id', bookController.updateBook);
+router.delete('/:id', bookController.deleteBook);
 
 export default router;

@@ -8,7 +8,7 @@ try {
   res.status(200).send(response.rows);
 } catch (error) {
   console.log(error);
-  return res.status(500).send("Internal Server Error");
+  return res.status(500).send("No books found");
   
 }
 }
@@ -32,7 +32,7 @@ async function insertBook (req: Request, res: Response) : Promise<Response> {
     
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("No book inserted");
   }
 }
 
@@ -43,7 +43,19 @@ async function deleteBook (req: Request, res: Response) : Promise<Response> {
     return res.status(200).send("Book deleted successfully");
   } catch (error) {
     console.log(error);
-    return res.status(500).send("Internal Server Error");
+    return res.status(500).send("No book deleted");	
+  }
+}
+
+async function updateBook (req: Request, res: Response) : Promise<Response> {
+  try {
+    const id: number = parseInt(req.params.id);
+    const { title, author, pages, genre } = req.body;
+    const response: QueryResult = await db.query("UPDATE books SET title = $1, author = $2, pages = $3, genre = $4 WHERE id = $5", [title, author, pages, genre, id]);
+    return res.status(200).send("Book updated successfully");
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("No book updated");
   }
 }
 
@@ -51,7 +63,8 @@ const bookController = {
   getAllBooks,
   getBookById,
   insertBook,
-  deleteBook
+  deleteBook,
+  updateBook
 }
 
 export default bookController;
